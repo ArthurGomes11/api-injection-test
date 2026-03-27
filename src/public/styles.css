@@ -1,0 +1,269 @@
+:root {
+  --bg: #f6f5ef;
+  --surface: #fffef8;
+  --ink: #1d1a14;
+  --muted: #6b6559;
+  --line: #d8d1c1;
+  --primary: #184e3b;
+  --primary-2: #d5f8d8;
+  --danger: #a52424;
+  --shadow: 0 10px 30px rgba(32, 28, 18, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 15%, rgba(24, 78, 59, 0.14), transparent 32%),
+    radial-gradient(circle at 90% 10%, rgba(201, 145, 28, 0.2), transparent 28%),
+    linear-gradient(180deg, #fefaf0 0%, #f5f3ea 100%);
+  padding: 24px;
+}
+
+.bg-shape {
+  position: fixed;
+  border-radius: 999px;
+  filter: blur(36px);
+  opacity: 0.45;
+  z-index: -1;
+}
+
+.bg-shape-1 {
+  width: 220px;
+  height: 220px;
+  background: #afdab2;
+  top: -60px;
+  left: -20px;
+}
+
+.bg-shape-2 {
+  width: 240px;
+  height: 240px;
+  background: #f1cc8a;
+  right: -60px;
+  bottom: -50px;
+}
+
+.hero {
+  max-width: 1100px;
+  margin: 0 auto 18px;
+  animation: rise 450ms ease-out;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4.2vw, 2.8rem);
+  letter-spacing: -0.03em;
+}
+
+.hero p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.status-bar {
+  margin-top: 14px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 10px;
+  box-shadow: var(--shadow);
+}
+
+.grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  animation: rise 500ms ease-out;
+}
+
+.card.wide {
+  grid-column: 1 / -1;
+}
+
+h2 {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+}
+
+h3 {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+}
+
+label,
+small,
+.hint {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+input,
+textarea,
+button {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fffefb;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+input,
+textarea {
+  margin-top: 6px;
+  padding: 10px;
+}
+
+button {
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 10px;
+  font-weight: 600;
+  background: var(--primary);
+  color: #ffffff;
+  border-color: transparent;
+  transition: transform 150ms ease, opacity 150ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-head button {
+  width: auto;
+  min-width: 110px;
+  margin-top: 0;
+}
+
+.product-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 16px;
+  padding: 12px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(24, 78, 59, 0.07), rgba(241, 204, 138, 0.12));
+}
+
+.product-form h3,
+.product-form button,
+.product-form textarea {
+  grid-column: 1 / -1;
+}
+
+.products-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.product-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fffdf6;
+  padding: 12px;
+}
+
+.product-item h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.product-item p {
+  margin: 6px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.product-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.product-actions button {
+  margin: 0;
+}
+
+.product-actions .danger {
+  background: var(--danger);
+}
+
+.log pre,
+#logOutput {
+  margin: 10px 0 0;
+  min-height: 120px;
+  max-height: 280px;
+  overflow: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  background: #1e1d1a;
+  color: #f2f2eb;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-form {
+    grid-template-columns: 1fr;
+  }
+}

@@ -39,6 +39,22 @@ JWT_EXPIRES_IN=1d
 npm run dev
 ```
 
+## Front-end simples
+
+Um cliente web estatico foi adicionado para testar a API.
+
+1. Inicie a API com `npm run dev`.
+2. Abra no navegador: `http://localhost:3000`.
+3. Faça login com um usuario da seed para testar:
+	- `admin@loja.com` / `Admin1234` (admin)
+	- `joao@cliente.com` / `Cliente123` (user)
+
+No painel, voce pode:
+
+- Fazer login e registro
+- Listar produtos
+- Criar/editar/remover produtos se estiver autenticado como admin
+
 ## Rodar seed
 
 ```bash
@@ -104,3 +120,17 @@ src/
 	scripts/
 	utils/
 ```
+
+## Deploy no Azure com Terraform
+
+Foi adicionada uma estrutura Terraform para subir a API em Azure App Service com container Docker.
+
+- Pasta: `infra/terraform/azure`
+- Guia completo: `infra/terraform/azure/README.md`
+
+Resumo rapido:
+
+1. Criar `terraform.tfvars` a partir de `terraform.tfvars.example`
+2. Executar `terraform init && terraform apply`
+3. Buildar e publicar a imagem no ACR criado
+4. Acessar a URL gerada no output `web_app_url`

@@ -46,3 +46,13 @@ Thumbs.db      # Windows
 
 # Coverage de testes
 /coverage/
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+!.env.example
+!infra/terraform/azure/terraform.tfvars.example

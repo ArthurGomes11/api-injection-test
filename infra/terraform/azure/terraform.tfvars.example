@@ -1,0 +1,11 @@
+subscription_id = "00000000-0000-0000-0000-000000000000"
+project_name    = "apiinjection"
+environment     = "dev"
+location        = "Brazil South"
+
+container_image_name = "api-injection-test"
+container_image_tag  = "v1"
+
+mongo_uri      = "mongodb+srv://usuario:senha@cluster.mongodb.net/api_injection_test"
+jwt_secret     = "troque-por-um-segredo-forte"
+jwt_expires_in = "1d"
