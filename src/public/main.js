@@ -109,7 +109,12 @@ async function loadCurrentUser() {
 function productCard(product) {
   const item = document.createElement('article');
   item.className = 'product-item';
-
+// ============================================================================
+// VULNERABILIDADE: STORED XSS (Cross-Site Scripting Armazenado)
+// ============================================================================
+// FORMA VULNERÁVEL (Atual):
+// O uso de 'innerHTML' confia cegamente no texto vindo da base de dados e
+// transforma-o em código executável no browser do cliente (<script>, <style>).
   item.innerHTML = `
     <h4>${product.name}</h4>
     <p>${product.category}</p>
@@ -120,6 +125,16 @@ function productCard(product) {
       <button class="danger delete">Remover</button>
     </div>
   `;
+// FORMA SEGURA:
+// Evitar a interpolação direta de HTML. Devemos criar os elementos DOM
+// via JavaScript e usar a propriedade 'textContent'. O 'textContent' 
+// garante que qualquer tag HTML injetada seja lida apenas como texto inofensivo.
+//
+// Código correto:
+// const title = document.createElement('h4');
+// title.textContent = product.name; // Injeção maliciosa é neutralizada aqui!
+// item.appendChild(title);
+// ... e assim sucessivamente para os restantes campos.
 
   const editBtn = item.querySelector('.edit');
   const deleteBtn = item.querySelector('.delete');

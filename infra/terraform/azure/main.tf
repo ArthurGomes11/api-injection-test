@@ -14,7 +14,12 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
+  features {
+      resource_group{
+        prevent_deletion_if_contains_resources = false
+  }
+  }
+
   subscription_id = var.subscription_id
 }
 
@@ -63,12 +68,16 @@ resource "azurerm_linux_web_app" "main" {
   service_plan_id     = azurerm_service_plan.main.id
   https_only          = true
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   site_config {
+    container_registry_use_managed_identity = true
+
     application_stack {
-      docker_image_name        = local.container_image_name
-      docker_registry_url      = "https://${azurerm_container_registry.main.login_server}"
-      docker_registry_username = azurerm_container_registry.main.admin_username
-      docker_registry_password = azurerm_container_registry.main.admin_password
+      docker_image_name   = local.container_image_name
+      docker_registry_url = "https://${azurerm_container_registry.main.login_server}"
     }
 
     always_on = true
@@ -83,4 +92,10 @@ resource "azurerm_linux_web_app" "main" {
     JWT_EXPIRES_IN                      = var.jwt_expires_in
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = "false"
   }
+}
+
+resource "azurerm_role_assignment" "web_app_acr_pull" {
+  scope                = azurerm_container_registry.main.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_linux_web_app.main.identity[0].principal_id
 }
